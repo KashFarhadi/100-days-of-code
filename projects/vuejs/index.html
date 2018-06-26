@@ -11,9 +11,14 @@
     
     <div id="app" hidden>
 
-        <div class="container pt-5">
+        <div class="container pt-5" :id="dynamicId">
 
-            <h2 v-bind:title="time">{{ title }}</h2>
+            <h1>Hi {{ fullName }}</h1>
+
+            <hr>
+
+            <h2 :title="time">{{ title }}</h2>
+
             <ul>
                 <li v-for="user in users">
                     {{ user.name }}: ${{ user.balance }}
@@ -26,12 +31,12 @@
 
             <br>
 
-            <button v-on:click="resetBalances" class="btn btn-primary">Reset balances</button>
+            <button @click="resetBalances" class="btn btn-danger">Reset balances</button>
 
             <br>
             <br>
 
-            <div v-if="lowBalance" class="alert alert-danger">Balances are low.</div>
+            <div v-if="lowBalance" class="alert alert-danger"><span v-html="warningMessage"></span> Balances are low.</div>
 
             <br>
 
@@ -40,8 +45,8 @@
                     <template>
                         <transaction
                             v-for="transaction in transactions"
-                            v-bind:item="transaction"
-                            v-bind:key="transaction.id">
+                            :item="transaction"
+                            :key="transaction.id">
                         </transaction>
                     </template>
                 </tbody>
@@ -49,21 +54,35 @@
 
             <hr class="my-5">
 
-            <div class="row">
-                <div class="col">
-                    <h5>Edit</h5>
-                    <textarea name="notes" id="" cols="30" rows="3" placeholder="Notes" v-model="notes" class="form-control"></textarea>
+            <form action="" @submit.prevent="saveNotes">
+                <div class="row">
+                        <div class="col">
+                            <h5>Edit</h5>
+                            <textarea name="notes" id="" cols="30" rows="3" placeholder="Notes" v-model="notes" class="form-control"></textarea>
+                        </div>
+                        <div class="col">
+                            <h5>Preview</h5>
+                            <div>{{ notes }}</div>
+                        </div>
                 </div>
-                <div class="col">
-                    <h5>Preview</h5>
-                    <div>{{ notes }}</div>
+
+                <br>
+
+                <div>
+                    <small>Character count: {{ notes.length }}</small>
                 </div>
-            </div>            
+
+                <br>
+
+                <button v-if="notes" class="btn btn-primary" type="submit">Save</button>
+
+            </form>
 
         </div>
     </div>
     
     <script src="vue.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>

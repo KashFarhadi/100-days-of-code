@@ -23,7 +23,8 @@ var app = new Vue({
 				balance: 500
 			},
 		],
-		transactions: [{
+		transactions: [
+			{
 				id: 0,
 				userId: 0,
 				value: 50,
@@ -44,7 +45,11 @@ var app = new Vue({
 		],
 		time: 'Last updated: ' + new Date().toLocaleString(),
 		notes: '',
-		instanceUpdates: 0,
+        instanceUpdates: 0,
+		warningMessage: '<strong>Attention:</strong>',
+		dynamicId: 'banking',
+		firstName: 'John A.',
+		lastName: 'Smith',
     },
     
 	computed: {
@@ -53,6 +58,16 @@ var app = new Vue({
 		},
 		lowBalance() {
 			return this.totalBalance < 500;
+		},
+		fullName: {
+			get: function() {
+				return this.firstName + ' ' + this.lastName;
+			},
+			set: function(newValue) {
+				var parts = newValue.split(' ');
+				this.firstName = parts[0];
+				this.lastName = parts[parts.length - 1];
+			}
 		}
     },
     
@@ -61,6 +76,11 @@ var app = new Vue({
 			this.users.forEach((user) => {
 				user.balance = 0;
 			});
+		},
+		saveNotes: function() {
+			console.log('Saved notes:');
+			console.log(this.notes);
+			console.log('---');			
 		}
 	},
 
