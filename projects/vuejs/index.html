@@ -56,11 +56,11 @@
 
             <form action="" @submit.prevent="saveNotes">
                 <div class="row">
-                        <div class="col">
+                        <div class="col-md-6">
                             <h5>Edit</h5>
-                            <textarea name="notes" id="" cols="30" rows="3" placeholder="Notes" v-model="notes" class="form-control"></textarea>
+                            <textarea name="notes" id="" rows="5" placeholder="Notes" v-model="notes" class="form-control" v-bind:class="{ 'border-danger': tooManyChars, 'border-success': validChars }"></textarea>
                         </div>
-                        <div class="col">
+                        <div class="col-md-6">
                             <h5>Preview</h5>
                             <div>{{ notes }}</div>
                         </div>
@@ -69,19 +69,33 @@
                 <br>
 
                 <div>
-                    <small>Character count: {{ notes.length }}</small>
+                    <small v-bind:class="validTextClass">Character count: {{ notes.length }}</small>
                 </div>
 
                 <br>
 
-                <button v-if="notes" class="btn btn-primary" type="submit">Save</button>
+                <button v-bind:disabled="!validChars" type="submit" class="btn btn-success">Save</button> 
 
             </form>
+
+            <hr />
+
+            <div>
+
+                <p>Ask a yes/no question:</p>
+                <div class="form-group">
+                    <input v-model="question" class="form-control">
+                </div>
+                <p class="alert alert-warning">{{ answer }}</p>
+
+            </div>
 
         </div>
     </div>
     
     <script src="vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
     <script src="script.js"></script>
 
 </body>

@@ -50,8 +50,18 @@ var app = new Vue({
 		dynamicId: 'banking',
 		firstName: 'John A.',
 		lastName: 'Smith',
-    },
-    
+
+		question: '',
+		answer: 'Waiting on question...',
+	},
+	
+	watch: {
+		question: function( newQuestion, oldQuestion ) {
+			this.answer = 'Waiting for you to stop typing...';
+			this.debouncedGetAnswer();
+		}
+	},
+
 	computed: {
 		totalBalance() {
 			return this.users.reduce((prev, curr) => prev + curr.balance, 0);
@@ -59,16 +69,28 @@ var app = new Vue({
 		lowBalance() {
 			return this.totalBalance < 500;
 		},
+		tooManyChars() {
+			return this.notes.length > 140;
+		},
+		validChars() {
+			return this.notes.length > 0 && this.notes.length <= 140;
+		},
+		validTextClass: function () {
+			return {
+				'text-danger': this.notes.length > 140,
+				'text-muted': this.notes.length == false,
+			};
+		},
 		fullName: {
-			get: function() {
+			get: function () {
 				return this.firstName + ' ' + this.lastName;
 			},
-			set: function(newValue) {
+			set: function (newValue) {
 				var parts = newValue.split(' ');
 				this.firstName = parts[0];
 				this.lastName = parts[parts.length - 1];
 			}
-		}
+		},
     },
     
 	methods: {
@@ -80,8 +102,23 @@ var app = new Vue({
 		saveNotes: function() {
 			console.log('Saved notes:');
 			console.log(this.notes);
-			console.log('---');			
-		}
+			console.log('---');
+		},
+		getAnswer: function() {
+			if ( this.question.indexOf('?') === -1 ) {
+				this.answer = 'Questions usually contain a question mark!';
+				return;
+			}
+			this.answer = 'Thinking...';
+			var vm = this;
+			axios.get('https://yesno.wtf/api')
+				.then( function (res) {
+					vm.answer = _.capitalize(res.data.answer);
+				})
+				.catch( function (err) {
+					vm.answer = 'Error: could not reach api: ' + err;
+				});
+		},
 	},
 
 	// Lifecycle methods
@@ -90,6 +127,7 @@ var app = new Vue({
 	},
 	created: function () {
 		console.log('App initialized at ' + new Date().toLocaleString());
+		this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
 	},
 	beforeMount() {
 		console.log('Mounting instance to DOM');
