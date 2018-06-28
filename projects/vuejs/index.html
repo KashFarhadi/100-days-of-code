@@ -11,17 +11,34 @@
     
     <div id="app" hidden>
 
+        <nav :class="[navClass, navThemeClass]">
+
+            <div class="container">
+
+                <a class="navbar-brand" href="#" :title="time">{{ title }}</a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" :title="{fullName}">Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <template>
+            <alert class="alert-warning" :style="impactStyleObject">Scheduled maintenance begins at 14:00 ADT.</alert>
+        </template>
+
         <div class="container pt-5" :id="dynamicId">
-
-            <h1>Hi {{ fullName }}</h1>
-
-            <hr>
-
-            <h2 :title="time">{{ title }}</h2>
 
             <ul>
                 <li v-for="user in users">
-                    {{ user.name }}: ${{ user.balance }}
+                    {{ user.name }}: <span :class="[ lowBalance ? dangerTextClass : '' ]">${{ user.balance }}</span>
                 </li>
             </ul>
 
@@ -58,7 +75,7 @@
                 <div class="row">
                         <div class="col-md-6">
                             <h5>Edit</h5>
-                            <textarea name="notes" id="" rows="5" placeholder="Notes" v-model="notes" class="form-control" v-bind:class="{ 'border-danger': tooManyChars, 'border-success': validChars }"></textarea>
+                            <textarea name="notes" id="" rows="5" placeholder="Notes" v-model="notes" class="form-control" :class="{ 'border-danger': tooManyChars, 'border-success': validChars }"></textarea>
                         </div>
                         <div class="col-md-6">
                             <h5>Preview</h5>
@@ -69,12 +86,12 @@
                 <br>
 
                 <div>
-                    <small v-bind:class="validTextClass">Character count: {{ notes.length }}</small>
+                    <small :class="validTextClass">Character count: {{ notes.length }}</small>
                 </div>
 
                 <br>
 
-                <button v-bind:disabled="!validChars" type="submit" class="btn btn-success">Save</button> 
+                <button :disabled="!validChars" type="submit" class="btn btn-success">Save</button> 
 
             </form>
 
@@ -91,6 +108,7 @@
             </div>
 
         </div>
+
     </div>
     
     <script src="vue.js"></script>
