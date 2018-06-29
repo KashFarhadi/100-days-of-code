@@ -22,9 +22,19 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Support</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" :title="{fullName}">Account</a>
-                        </li>
+                        <template v-if="loggedIn">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" :title="fullName">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" @click="logout">Logout</a>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" @click="login">Login</a>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </div>
@@ -48,12 +58,22 @@
 
             <br>
 
+            <button @click="fundBalances" class="btn btn-success">Fund balances</button>
             <button @click="resetBalances" class="btn btn-danger">Reset balances</button>
 
             <br>
             <br>
 
-            <div v-if="lowBalance" class="alert alert-danger"><span v-html="warningMessage"></span> Balances are low.</div>
+            <template v-if="totalBalance === 0">
+                <div class="alert alert-danger">
+                    <span v-html="warningMessage"></span> Balances are empty.
+                </div>
+            </template>
+            <template v-else-if="lowBalance">
+                <div class="alert alert-warning">
+                    <span v-html="warningMessage"></span> Balances are low.
+                </div>
+            </template>
 
             <br>
 
@@ -106,6 +126,35 @@
                 <p class="alert alert-warning">{{ answer }}</p>
 
             </div>
+
+            <hr>
+
+            <h2>Controlling reusable elements with <code>key</code></h2>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <p><strong>Without</strong> <code>key</code> attribute on input field</p>
+                    <template v-if="loggedIn">
+                        <input type="text" class="form-control">
+                    </template>
+                    <template v-else>
+                        <input type="text" class="form-control">
+                    </template>
+                </div>
+                <div class="col-sm-6">
+                    <p>With <code>key</code> attribute on input field</p>
+                    <template v-if="loggedIn">
+                        <input type="text" class="form-control" key="loggedInKey">
+                    </template>
+                    <template v-else>
+                        <input type="text" class="form-control" key="loggedOutKey">
+                    </template>
+                </div>
+            </div>
+
+            <div v-show="false">This is a hidden element but still exists in DOM</div>
+
+            <br>
 
         </div>
 

@@ -59,14 +59,16 @@ var app = new Vue({
     question: '',
     answer: 'Waiting on question...',
 
-	navClass: 'navbar navbar-expand-lg',
-	navThemeClass: 'navbar-light bg-light',
-	dangerTextClass: 'text-danger',
+    navClass: 'navbar navbar-expand-lg',
+    navThemeClass: 'navbar-light bg-light',
+    dangerTextClass: 'text-danger',
 
-	impactStyleObject: {
-		fontSize: '18px',
-		fontWeight: 100,
-	}
+    impactStyleObject: {
+      fontSize: '18px',
+      fontWeight: 100,
+    },
+
+    loggedIn: true,
   },
 
   watch: {
@@ -113,6 +115,11 @@ var app = new Vue({
         user.balance = 0;
       });
     },
+    fundBalances: function() {
+      this.users.forEach(user => {
+        user.balance = 500;
+      });
+    },
     saveNotes: function() {
       console.log('Saved notes:');
       console.log(this.notes);
@@ -133,6 +140,12 @@ var app = new Vue({
         .catch(function(err) {
           vm.answer = 'Error: could not reach api: ' + err;
         });
+    },
+    logout: function() {
+      this.loggedIn = false;
+    },
+    login: function() {
+      this.loggedIn = true;
     }
   },
 
