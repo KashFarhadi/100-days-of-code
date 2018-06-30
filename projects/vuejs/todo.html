@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Vue.js Todo App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<div id="app" hidden>
+        <div class="container mt-5">
+
+            <h1>Todo List</h1>
+
+            <hr class="mb-5">
+
+            <form action="" @submit.prevent="addTodo">
+                <div class="input-group mb-5">
+                    <input type="text" class="form-control" v-model="nextTodo.desc" autofocus />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+
+            <ul class="list-group">
+                <li 
+                    is="todo"
+                    v-for="(todo, index) in todos"
+                    :key="todo.id"
+                    :desc="todo.desc"
+                    @remove="todos.splice(index, 1)"
+                    >
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+	<script src="vue.js"></script>
+	<script src="todo.js"></script>
+
+</body>
+
+</html>
