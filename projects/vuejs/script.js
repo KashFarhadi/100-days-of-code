@@ -15,7 +15,7 @@ var app = new Vue({
       {
         id: 0,
         name: 'Jonny',
-        balance: 25
+        balance: 0
       },
       {
         id: 1,
@@ -69,6 +69,12 @@ var app = new Vue({
     },
 
     loggedIn: true,
+
+    account: {
+      name: 'Jonny',
+      email: 'jonny@gmail.com',
+      phone: '1-234-567-8910',
+    }
   },
 
   watch: {
@@ -106,6 +112,9 @@ var app = new Vue({
         this.firstName = parts[0];
         this.lastName = parts[parts.length - 1];
       }
+    },
+    usersByBalance: function () {
+      return this.users.sort( (a, b) => a.balance > b.balance );
     }
   },
 
@@ -179,3 +188,8 @@ var app = new Vue({
 
 // Alternative way to mount instance if no el is provided in init options object
 // app.$mount('#app');
+
+// Set value of existing array item (reactively)
+app.account = Object.assign( {}, app.account, {
+  location: 'Canada',
+});
