@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+<body>  
+
+    <div id="app" class="container mt-5" hidden>
+
+        <h1>Form</h1>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-sm-6">
+                <form @submit.prevent="submitForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="First Name" v-model.trim="form.firstName">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Last Name" v-model.trim="form.lastName">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="age" v-model.number="form.age" placeholder="Age">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+
+                        <div class="col-sm-12">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" value="Male" v-model="form.gender">
+                                <label class="form-check-label">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" value="Female"  v-model="form.gender">
+                                <label class="form-check-label">
+                                    Female
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <select v-model="form.plan">
+                            <option value="" disabled>- Select plan -</option>
+                            <option value="Basic">Free</option>
+                            <option value="Premium">Premium</option>
+                            <option value="Enterprise">Enterprise</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <input type="checkbox" v-model="form.agreedTOS" true-value="Yes" false-value="No"> I agree to the terms of service.
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" :disabled="form.agreedTOS == 'No'">Submit</button>
+
+                </form>
+            </div>
+
+            <div class="col-sm-6">
+                <div><strong>Name:</strong> {{ form.firstName }} {{ form.lastName }}</div>
+                <div><strong>Age:</strong> {{ form.age }}</div>
+                <div><strong>Gender:</strong> {{ form.gender }}</div>
+                <div><strong>Selected plan:</strong> {{ form.plan }}</div>
+                <div><strong>Agreed to TOS:</strong> {{ form.agreedTOS }}</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script src="form.js"></script>
+    
+</body>
+</html>
