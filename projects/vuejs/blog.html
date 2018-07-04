@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Vue.js Blog</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+	<div id="blog" class="container mt-5" hidden>
+
+
+        <h1>Blog</h1>
+        
+        <hr>
+
+        <alert type="warning">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sunt excepturi nobis.</alert>
+
+        <blog-post
+            v-for="post in posts"
+            :key="post.id"
+            :post="post">
+        </blog-post>
+
+	</div>
+
+	<script src="vue.js"></script>
+	<script src="blog.js"></script>
+
+</body>
+
+</html>
