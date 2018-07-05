@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notepad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="app" hidden>
+        <div class="container-fluid py-3">
+            <h6>Notes</h6>
+            <form @submit.prevent="save">
+                <div class="form-group">
+                    <textarea @keydown.shift.enter.prevent="save" cols="30" rows="10" v-model="notes" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" :disabled="saved">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script src="popup.js"></script>
+    
+</body>
+</html>

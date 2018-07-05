@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Notepad",
+    "version": "1.0",
+    "description": "Notepad chrome extension",
+    "icons": {
+        "128": "icons/icon128.png",
+        "48": "icons/icon48.png",
+        "16": "icons/icon16.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/icon16.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
