@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueJS Transitions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'/>
+    <link rel="stylesheet" href="transitions.css">
+</head>
+<body>
+
+    <div id="app" hidden>
+        
+        <div class="container my-5">
+
+            <h6>Transition classes</h6>
+            <div class="form-group">
+                <button @click="showExample1 = !showExample1" class="btn btn-primary">Toggle</button>
+            </div>
+
+            <transition name="fade">
+                <h1 v-if="showExample1">Hello</h1>
+            </transition>
+
+            <hr>
+
+            <h6>Custom transition classes using attributes and animate.css</h6>
+            <div class="form-group">
+                <button @click="showExample2 = !showExample2" class="btn btn-primary">Toggle</button>
+            </div>
+
+            <transition
+                name="test"
+                enter-active-class="animated fadeInLeft"
+                leave-active-class="animated fadeOutLeft">
+                <h1 v-if="showExample2">Bonjour</h1>
+            </transition>
+
+            <hr>
+
+            <h6>Animations w/ javascript hooks</h6>
+
+            <div class="form-group">
+                <button @click="showExample3 = !showExample3" class="btn btn-primary">Toggle</button>
+            </div>
+            
+            <transition
+                name="fade"
+                @enter="transitionStatus = 'entering transition'"
+                @after-enter="transitionStatus = 'after enter transition'"
+                @leave="transitionStatus = 'leaving transition'"
+                @after-leave="transitionStatus = 'after leave transition'">
+                <h1 v-if="showExample3">Hola</h1>
+            </transition>
+
+            <div class="alert alert-warning" v-if="transitionStatus">
+                <strong>Animation status:</strong> <code>{{ transitionStatus }}</code>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.5/velocity.min.js'></script>
+    <script src="transitions.js"></script>
+</body>
+</html>
